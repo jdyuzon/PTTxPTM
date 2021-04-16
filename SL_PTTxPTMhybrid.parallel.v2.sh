@@ -45,9 +45,9 @@ fastqc=/data/biosoftware/FastQC/FastQC/fastqc
 ##########################################################
 echo "Directories"
 ##########################################################
-refPTT=/home/yuzon/references/hybrid_references/PTT_0-1_assembly.v14.fa
-refPTM=/home/yuzon/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
-merged_genome=/home/yuzon/references/hybrid_references/merged_genome_PTTxPTM.fasta
+refPTT=~/references/hybrid_references/PTT_0-1_assembly.v14.fa
+refPTM=~/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
+merged_genome=~/references/hybrid_references/merged_genome_PTTxPTM.fasta
 ####index fasta
 #bwa index ${main_dir%/PTTxPTMtest/}/references/hybrid_references/merged_genome_PTTxPTM.fasta
 
@@ -77,8 +77,6 @@ dups_dir=${main_dir}aligned/sorted/stats/dups/
 
 snps=${main_dir}SNPcalling/
 
-gridss=${main_dir}gridss
-manta=${main_dir}manta
 parsnp_qry=${main_dir}SNPcalling/parsnp_qry/
 parsnp_out=${main_dir}SNPcalling/parsnp_out/
 nucmer=${main_dir}SNPcalling/nucmer/
