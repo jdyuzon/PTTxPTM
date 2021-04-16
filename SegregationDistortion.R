@@ -16,7 +16,7 @@ goodIsoOrder <- c(1:70,72:79,"79b",80:120)
 
 
 #### Finer Quality (extend ranges to nearest similar allele): PTM coordinates mapped to PTT 
-blockbed<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/Recombination Blocks/all.common_unique.blocks.bed.tmp", header = FALSE,sep = "\t",fill=TRUE)
+blockbed<-read.table("all.common_unique.blocks.bed.tmp", header = FALSE,sep = "\t",fill=TRUE)
 
 #### isolate order for publication
 goodIsoOrder <- c("1","2","3","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","25","27","28","29","30","31","32","33","34","36","37","38","39","40","41","42","43","45","46","47","48","49","50","51","52","53","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","72","75","76","77","79b","81","82","83","84","85","86","87","88","90","91","92","93","95","96","97","98","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120")
@@ -48,8 +48,8 @@ ggplot(blockbed, aes(x=log10(sizes), fill=V4)) +
 ####################### Mapping to PTT genome ##############################
 
 #### Finer Quality (extend ranges to nearest similar allele): PTM coordinates mapped to PTT 
-blockPTT<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.bed", header = FALSE,sep = "\t")
-blockPTT_matmito<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.matmito.bed", header = FALSE,sep = "\t")
+blockPTT<-read.table("all.common_unique.blocks.bed", header = FALSE,sep = "\t")
+blockPTT_matmito<-read.table("all.common_unique.blocks.matmito.bed", header = FALSE,sep = "\t")
 
 blockPTT$V1 <- factor(blockPTT$V1,levels=goodChrOrder)
 blockPTT$V5 <- factor(blockPTT$V5,levels=goodIsoOrder)
@@ -86,7 +86,7 @@ ggplot()+
 ######################Segregation Distortion: Hybrid Population#############
 ############################################################################
 #df<-read.table("~/Downloads/all.recomblocks.bed.tmp", header = TRUE,sep = "\t",na.strings = c(".","0"))
-df<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/all.recomblocks.bed.tmp", header = TRUE,sep = "\t",na.strings = c(".","0")) #,fill=TRUE
+df<-read.table("/all.recomblocks.bed.tmp", header = TRUE,sep = "\t",na.strings = c(".","0")) #,fill=TRUE
 df$chrom <- factor(df$chrom,levels=c(goodChrOrder,
                                      "0-1_contig_32","0-1_contig_39",
                                      "0-1_contig_40","0-1_contig_43",
@@ -202,33 +202,10 @@ ggarrange(ptt_seggenome,ptm_seggenome,ptt_segcontig,ptm_segcontig,
 
 
 ############################################################################
-######################Linkage Disequilibrium: Hybrid Population#############
-############################################################################
-r_matrix<-as.matrix(read.table("~/Downloads/testing_ground/all.r.ld", header = FALSE,sep = "\t",na.strings = "nan"))
-r2_matrix<-as.matrix(read.table("~/Downloads/testing_ground/all.r2.ld", header = FALSE,sep = "\t",na.strings = "nan"))
-
-r<-unlist(r_matrix)
-hist(r)
-r2<-unlist(r2_matrix)
-hist(r2)
-
-png(filename = "Rplot%03d.png",
-    width = 4800, height = 4800, units = "px", pointsize = 12,
-    bg = "white",  res = NA,
-    type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
-corrplot(r_matrix, method="color", type = "upper",tl.pos = "td", tl.cex = 0.5,)
-dev.off()
-
-
-
-r_matrix<-as.matrix(read.table("all.r.ld", header = FALSE,sep = "\t",na.strings = "nan"))
-markers<-read.table("all.markers.bed", header = FALSE,sep = "\t")
-
-############################################################################
 ###################### Recombination Hotspots ##############################
 ############################################################################
 
-rbreak_dens<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/Recombination Blocks/all.breaks.density", header = FALSE,sep = "\t")
+rbreak_dens<-read.table("all.breaks.density", header = FALSE,sep = "\t")
 ##rbreak<-read.table("~/Downloads/testing_ground/all.breaks.blocks", header = FALSE,sep = "\t")
 ###rbreak_dens<-read.table("~/Downloads/all.breaks.density", header = FALSE,sep = "\t")
 
@@ -344,7 +321,7 @@ ggplot(data=rbreak_dens, aes(x=start, y=breaks)) +
   scale_color_manual(values=c("#FF0000FF", "#FFFFFF00"))
 
 rhot<-rbreak_dens[ which(rbreak_dens$significant=='hotspot' ),]
-write.table(rhot, file = "~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/all.recombhotspots.txt", append = FALSE, quote = FALSE, sep = "\t",
+write.table(rhot, file = "all.recombhotspots.txt", append = FALSE, quote = FALSE, sep = "\t",
             eol = "\n", na = "NA", dec = ".", row.names = FALSE,
             col.names = FALSE, qmethod = c("escape", "double"),
             fileEncoding = "")
@@ -353,7 +330,7 @@ write.table(rhot, file = "~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortio
 ###################### Genomic Features and Segregation Distortion #########
 ############################################################################
 ####format gene density
-genedensity<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTTxPTM_tracks.genedensity.bed", header = FALSE,sep = "\t")
+genedensity<-read.table("PTTxPTM_tracks.genedensity.bed", header = FALSE,sep = "\t")
 colnames(genedensity)<-c("chrom","start","stop","genecount")
 genedensity<-genedensity[grepl("chrPTT|m86|contig", genedensity$chrom), , drop = FALSE]
 genedensity<-data.frame(lapply(genedensity, function(x) {gsub("PTT_", "", x)}))
@@ -363,7 +340,7 @@ genedensity_genome<-genedensity[grepl("chr|mitochondria$", genedensity$chrom), ,
 genedensity_contig<-genedensity[grepl("0-1_contig", genedensity$chrom), , drop = FALSE]
 
 ####format repeats
-repeats<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTMxPTT.allrepeat.04292020.bed", header = FALSE,sep = "\t")
+repeats<-read.table(PTMxPTT.allrepeat.04292020.bed", header = FALSE,sep = "\t")
 colnames(repeats)<-c("chrom","start","stop","repeat","repeat_type")
 repeats<-repeats[grepl("chrPTT|m86|contig", repeats$chrom), , drop = FALSE]
 repeats<-data.frame(lapply(repeats, function(x) {gsub("PTT_", "", x)}))
@@ -373,7 +350,7 @@ repeats_genome<-repeats[grepl("chr|mitochondria$", repeats$chrom), , drop = FALS
 repeats_contig<-repeats[grepl("0-1_contig", repeats$chrom), , drop = FALSE]
 
 ####format effectors
-effectors<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTTxPTM_tracks.effectors.bed", header = FALSE,sep = "\t")
+effectors<-read.table("PTTxPTM_tracks.effectors.bed", header = FALSE,sep = "\t")
 colnames(effectors)<-c("chrom","start","stop")
 effectors<-effectors[grepl("chrPTT|m86|contig", effectors$chrom), , drop = FALSE]
 effectors<-data.frame(lapply(effectors, function(x) {gsub("PTT_", "", x)}))
@@ -384,7 +361,7 @@ effectors_genome<-effectors[grepl("chr|mitochondria$", effectors$chrom), , drop 
 effectors_contig<-effectors[grepl("0-1_contig", effectors$chrom), , drop = FALSE]
 
 ####format biosynthetic clusters
-bsc<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTTxPTM_tracks.bsc.bed", header = FALSE,sep = "\t")
+bsc<-read.table("PTTxPTM_tracks.bsc.bed", header = FALSE,sep = "\t")
 colnames(bsc)<-c("chrom","start","stop","region")
 bsc<-bsc[grepl("chrPTT|m86|contig", bsc$chrom), , drop = FALSE]
 bsc<-data.frame(lapply(bsc, function(x) {gsub("PTT_", "", x)}))
@@ -394,19 +371,8 @@ bsc$types<-"bsc"
 bsc_genome<-bsc[grepl("chr|mitochondria$", bsc$chrom), , drop = FALSE]
 bsc_contig<-bsc[grepl("0-1_contig", bsc$chrom), , drop = FALSE]
 
-####format inversions
-inv<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTTvsPTM.nuclear_mito.masked.inversions.tracks.txt", header = FALSE,sep = "\t")
-colnames(inv)<-c("chrom","start","stop")
-inv<-inv[grepl("chrPTT|m86|contig", inv$chrom), , drop = FALSE]
-inv<-data.frame(lapply(inv, function(x) {gsub("PTT_", "", x)}))
-inv<- data.frame(lapply(inv, function(x) {gsub("0-1_contig_m86","mitochondria", x)}))
-inv[,2:3] <- data.frame(lapply(inv[,2:3], function(x) {as.numeric(as.character(x))}))
-inv$types<-"inversion"
-inv_genome<-inv[grepl("chr|mitochondria$", inv$chrom), , drop = FALSE]
-inv_contig<-inv[grepl("0-1_contig", inv$chrom), , drop = FALSE]
-
 ####format mat loci
-mat<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/matloci.bed", header = FALSE,sep = "\t")
+mat<-read.table("matloci.bed", header = FALSE,sep = "\t")
 colnames(mat)<-c("chrom","start","stop")
 mat<-mat[grepl("chrPTT|m86|contig", mat$chrom), , drop = FALSE]
 mat<-data.frame(lapply(mat, function(x) {gsub("PTT_", "", x)}))
@@ -414,7 +380,7 @@ mat[,2:3] <- data.frame(lapply(mat[,2:3], function(x) {as.numeric(as.character(x
 mat$types<-"mat"
 
 ####format Presence/Absence Variation
-pav<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/PTTvsPTM.nuclearchrmitochondria.shared.txt", header = FALSE,sep = "\t")
+pav<-read.table("PTTvsPTM.nuclearchrmitochondria.shared.txt", header = FALSE,sep = "\t")
 colnames(pav)<-c("chrom","start","stop")
 pav<-pav[grepl("chrPTT|m86|contig", pav$chrom), , drop = FALSE]
 pav<-data.frame(lapply(pav, function(x) {gsub("PTT_", "", x)}))
@@ -431,7 +397,7 @@ rbreak_genome<-rbreak_dens[grepl("chr|mito", rbreak_dens$chrom), , drop = FALSE]
 rbreak_contig<-rbreak_dens[grepl("0-1_contig", rbreak_dens$chrom), , drop = FALSE]
 
 ####format regions unique to PTTxPTM segregation distortion
-unique<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/uniq.PTTxPTM.bed", header = FALSE,sep = "\t")
+unique<-read.table("uniq.PTTxPTM.bed", header = FALSE,sep = "\t")
 colnames(unique)<-c("chrom","start","stop")
 unique$type<-"unique"
 unique[,2:3] <- data.frame(lapply(unique[,2:3], function(x) {as.numeric(as.character(x))}))
@@ -510,7 +476,7 @@ for (i in seq_along(strips)) {
   #g$grobs[[strips[i]]]$grobs[[1]]$children[[l]]$children[[1]]$gp$col <- pal[i + 1]
 }
 
-pdf("~/Desktop/Postdoc_Pteres/QuantGen/SegregationDistortion/SegregationDistortion_files/SegregationDistortion_genomicfeatures_nuclmito_PTTxPTM.pdf", width = 21, height=7)
+pdf("~/SegregationDistortion_genomicfeatures_nuclmito_PTTxPTM.pdf", width = 21, height=7)
 plot(g)
 dev.off()
 
@@ -540,143 +506,4 @@ ggplot() +
   scale_y_continuous(name ="                                  PTM Allele Frequency", 
                      labels=c("","0","0.5","1.0"))
 
-
-
-################# Field Populations: Presence/Absence ########################
-fieldpop<-read.table("~/Downloads/all.fieldpop.SD.bed",header = FALSE,fill=TRUE)  ###add column names ##chr start stop## allele to the end of the file
-colnames(fieldpop)<-c("CHROM","start","stop","SNPdensity","Altdensity","isolate")
-fieldpop$CHROM<- factor(fieldpop$CHROM,levels=goodChrOrder)
-fieldpop<-subset(fieldpop,SNPdensity > 0)
-fieldpop$subspecies<-"PTT"
-fieldpop$subspecies[fieldpop$isolate=='E32_Pt54'|
-                      fieldpop$isolate=='E74S_Pt63_AB'|
-                      fieldpop$isolate=='G106_Pt124'|
-                      fieldpop$isolate=='H165_Pt152'|
-                      fieldpop$isolate=='T305_Pt88']<-"PTM"
-
-fieldpop$subspecies <- factor(fieldpop$subspecies, levels= c("PTM","PTT"))
-
-fieldpop$isolate <- factor(fieldpop$isolate, 
-                           levels= levels(fieldpop$isolate)[c(unique(fieldpop$isolate[fieldpop$subspecies=="PTM"]),
-                                         unique(fieldpop$isolate[fieldpop$subspecies=="PTT"]))])
-
-fieldpop_SD<-ggplot(data=fieldpop,aes(colour=Altdensity))+
-  facet_grid(isolate~CHROM,scales="free", space="free_x", switch="both")+
-  geom_rect(data=fieldpop,aes(xmin = start, xmax = stop,ymin=-0.15,
-                              ymax=-0.1,fill=SNPdensity),
-            alpha=0.2,show.legend = FALSE)+
-  geom_rect(data=fieldpop,aes(xmin = start, xmax = stop,ymin=-0.15,
-                              ymax=-0.1,fill=Altdensity), show.legend = TRUE)+
-  scale_colour_gradient2(low = "#FFFFFF00", mid = "orange", high = "red", midpoint = 100)+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))  
-
-
-g <- ggplot_gtable(ggplot_build(fieldpop_SD))
-strips <- which(grepl('strip-', g$layout$name))
-pal <- rev(c("#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#92C5DE","#3288BD", "#2166AC", "#5E4FA2"))
-for (i in seq_along(strips)) {
-  k <- which(grepl('rect', g$grobs[[strips[i]]]$grobs[[1]]$childrenOrder))
-  #l <- which(grepl('titleGrob', g$grobs[[strips[i]]]$grobs[[1]]$childrenOrder))
-  g$grobs[[strips[i]]]$grobs[[1]]$children[[k]]$gp$fill <- pal[i]
-  #g$grobs[[strips[i]]]$grobs[[1]]$children[[l]]$children[[1]]$gp$col <- pal[i + 1]
-}
-pdf("Downloads/test2.pdf",height=24, width = 24)
-plot(g)
-dev.off()
-
-
-ggplot(fieldpop, aes(x=subspecies,y=SNPdensity,fill=subspecies)) +
-  geom_boxplot()+
-  stat_compare_means(aes(group = subspecies))+
-  scale_fill_manual(values=c("blue", "red"))+
-  facet_wrap(~CHROM,scales = "free")
-
-ggplot(fieldpop, aes(x=subspecies,y=Altdensity,fill=subspecies)) +
-  geom_boxplot()+
-  stat_compare_means(aes(group = subspecies))+
-  scale_fill_manual(values=c("blue", "red"))+
-  facet_wrap(~CHROM,scales = "free")
-
-
-##################################################
-####### SNP Segregation Distortion ###############
-##################################################
-snpGT<-read.table("~/Downloads/all.GTcount", header = FALSE,sep = "\t",fill=TRUE,col.names = c("chrom","posn","ref","alt"))
-snpGT$total<-snpGT$ref+snpGT$alt
-snpGT<-subset(snpGT, total>=16)
-
-snpGT$ref_freq<-snpGT$ref/(snpGT$ref+snpGT$alt)
-snpGT$alt_freq<-snpGT$alt/(snpGT$ref+snpGT$alt)
-snpGT$chrom = factor(snpGT$chrom,levels=goodChrOrder)
-
-
-
-snpSD<-ggplot() + 
-  geom_linerange(data=pav_genome,aes(xmin = start, xmax = stop,y=-0.7,
-                                     colour=types, alpha=0.5),size=3.5,show.legend = FALSE)+
-  geom_point(data=snpGT, aes(x=posn, y=alt_freq,alpha = 0.2),size=1,show.legend = FALSE)+
-  geom_hline(yintercept = -0.5,color="white",size = 58)+
-  geom_linerange(data=segreg_genome, aes(xmin = start, xmax = stop, y=freq_ptm,
-                                         colour=significant),size = 5,show.legend = FALSE)+
-  facet_grid(~chrom,   scales = "free_x",
-             labeller = labeller(chrom = chrom_names))+
-  scale_color_manual(values=c(
-    "bsc"="deepskyblue3",
-    "effector"="palegreen3",
-    "hotspot"="red", 
-    "low-simple_repeat"="lightgoldenrodyellow", 
-    "mat"="purple",
-    "non-hotspot"="#FFFFFF00",
-    "non-significant"="gray",
-    "significant"="blue",
-    "TE"="salmon",
-    "shared"="darkorchid3"
-  ))+
-  geom_hline(yintercept = 0.5)+
-  geom_hline(yintercept = -0.08,color="gray")+
-  theme(panel.spacing = unit(0, "lines"),
-        panel.border = element_rect(color = "light gray", fill = NA, size = 0.5),
-        strip.text.x.top = element_text(angle = 90),
-        axis.text.x = element_text(angle = 90, hjust = 1),
-        axis.ticks.y = element_blank())+  
-  geom_rect(data=genedensity_genome,aes(xmin = start, xmax = stop,ymin=-0.15,
-                                        ymax=-0.1,fill=genecount),show.legend = FALSE)+
-  scale_fill_gradient(low="#FFFFFF00",high="gray19")+
-  #geom_rect(data=repeats_genome,aes(xmin = start, xmax = stop,ymin=-0.25,
-  #                                      ymax=-0.2, colour=repeat_type),show.legend = FALSE)+
-  geom_linerange(data=repeats_genome,aes(xmin = start, xmax = stop,y=-0.23,
-                                         colour=repeat_type),size=3.5,show.legend = FALSE)+
-  geom_rect(data=effectors_genome,aes(xmin = start, xmax = stop,ymin=-0.35,
-                                      ymax=-0.3, colour=type),show.legend = FALSE)+
-  geom_linerange(data=bsc_genome,aes(xmin = start, xmax = stop,y=-0.43,
-                                     colour=types),size=3.5,show.legend = FALSE)+
-  geom_linerange(data=mat,aes(xmin = start-10000, xmax = stop+10000,y=-0.5,
-                              colour=types),size=5,alpha=1,show.legend = FALSE)+
-  geom_linerange(data=rbreak_genome,aes(xmin = start, xmax = stop,y=-0.6,
-                                        colour=significant),size=3.5,show.legend = FALSE)+
-  theme_light()+ theme(panel.margin = unit(0, "lines"),
-                       panel.border = element_rect(color = "light gray", fill = NA, size = 0.5),
-                       #strip.text.x.top = element_text(angle = 90),
-                       strip.text.x.top = element_text(size = 20, color = "black",face = "bold"),
-                       #axis.text.x=element_blank(),
-                       axis.ticks.x=element_blank(),
-                       axis.ticks.y=element_blank(),
-                       axis.title=element_text(size=18,face="bold"))+
-  scale_y_continuous(limits=c(-0.75,1),name ="            FGOB10Ptm-1 Allele Frequency", 
-                     labels=c("","","0","0.5","1.0"))+
-  scale_x_continuous(breaks=c(0,1000000,2000000,3000000,4000000,5000000,6000000), 
-                     labels=c("0","1","2","3","4","5","6"))+
-  xlab("Nuclear and Mitochondrial Genome")
-
-
-
-pdf("Downloads/test2.pdf",width = 21, height=7)
-plot(snpSD)
-dev.off()
 
