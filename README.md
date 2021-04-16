@@ -40,10 +40,3 @@ SL_Populations_aligntoPTT.parallel.v2.sh
 SL_Populations_aligntoPTT.joint.v3.sh
 SL_DivergenceGeneFlow.v2.sh
 ```
-### c. Dn/Ds and Pn/Ps
-```
-SL_MKtest.sh
-find_orthologs.JDY.py
-MKtest.py
-codonalignmentJDY.py
-```
