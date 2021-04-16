@@ -3,7 +3,7 @@ library(tidyverse)
 library(grid)
 library(car)
 
-phenotypes<-read.csv("~/Desktop/Postdoc_Pteres/QuantGen/Pteres_Postzygotic_F1_phenotypes/FinalPhenotypingResults/PterespopsonKombar.csv", header = TRUE)
+phenotypes<-read.csv("PterespopsonKombar.csv", header = TRUE)
 colnames(phenotypes)[8]<-"mean.percent.leaf.coverage"
 phenotypes$labels <- paste0(phenotypes$CrossParents)
 phenotypes$Net.blotch.form[phenotypes$Net.blotch.form=='N']<-'Net Lesion'
@@ -69,167 +69,13 @@ for (i in seq_along(strips)) {
 plot(g)
 
 
-pdf("~/Desktop/Postdoc_Pteres/QuantGen/Pteres_Postzygotic_F1_phenotypes/FinalPhenotypingResults/Phenotype_percentleaf_allrep")
+pdf("Phenotype_percentleaf_allrep")
 plot(p)
 dev.off()
 
-pdf("~/Desktop/Postdoc_Pteres/QuantGen/Pteres_Postzygotic_F1_phenotypes/FinalPhenotypingResults/Phenotype_DiseaseScore_allrep")
+pdf("Phenotype_DiseaseScore_allrep")
 plot(g)
 dev.off()
-
-####Medians-percent.leaf.coverage
-###Parents-Net
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-             phenotypes$Rep==1 &
-             phenotypes$Cross.Type=='Parents']) #0.875
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Parents']) #0.875
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Parents']) #0.6
-
-###Intraspecies-Net
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Intra']) #0.7
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Intra']) #0.6
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Intra']) #0.7
-
-###Interspecies-Net
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Inter']) #0.2
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Inter']) #0.35
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Inter']) #0.25
-
-###Parents-Spot
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Parents']) #0.325
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Parents']) #0.4
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Parents']) #0.65
-
-###Intraspecies-Spot
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Intra']) #0.4
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Intra']) #0.4
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Intra']) #0.5
-
-###Interspecies-Spot
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Inter']) #0.2
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Inter']) #0.225
-median(phenotypes$percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Inter']) #0.2
-
-
-####Medians-DiseaseScore
-###Parents-Net
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Parents']) #0.9
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Parents']) #0.825
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Parents']) #0.75
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Net Lesion' &
-                                         phenotypes$Cross.Type=='Parents'])) #0.8660236
-
-###Intraspecies-Net
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Intra']) #0.75
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Intra']) #0.7
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Intra']) #0.75
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Net Lesion' &
-                                       phenotypes$Cross.Type=='Intra'])) #0.7856377
-
-
-###Interspecies-Net
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Inter']) #0.35
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Inter']) #0.45
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Net Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Inter']) #0.4
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Net Lesion' &
-                                       phenotypes$Cross.Type=='Inter'])) #0.4287245
-
-###Parents-Spot
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Parents']) #0.35
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Parents']) #0.35
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Parents']) #0.45
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                       phenotypes$Cross.Type=='Parents'])) #0.375134
-
-###Intraspecies-Spot
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Intra']) #0.35
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Intra']) #0.35
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Intra']) #0.35
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                       phenotypes$Cross.Type=='Intra'])) #0.375134
-
-###Interspecies-Spot
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==1 &
-                                          phenotypes$Cross.Type=='Inter']) #0.25
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==2 &
-                                          phenotypes$Cross.Type=='Inter']) #0.225
-median(phenotypes$Kombar.reaction.type[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                          phenotypes$Rep==3 &
-                                          phenotypes$Cross.Type=='Inter']) #0.225
-
-median(na.omit(phenotypes$RT.Average[phenotypes$Net.blotch.form=='Spot Lesion' &
-                                       phenotypes$Cross.Type=='Inter'])) #0.249732
 
 
 #### Test for homogeneity
@@ -296,11 +142,11 @@ for (i in seq_along(strips)) {
 
 plot(g)
 
-pdf("~/Desktop/Postdoc_Pteres/QuantGen/Pteres_Postzygotic_F1_phenotypes/FinalPhenotypingResults/Phenotype_percentleaf_pooled")
+pdf("Phenotype_percentleaf_pooled")
 plot(p)
 dev.off()
 
-pdf("~/Desktop/Postdoc_Pteres/QuantGen/Pteres_Postzygotic_F1_phenotypes/FinalPhenotypingResults/Phenotype_DiseaseScore_pooled")
+pdf("Phenotype_DiseaseScore_pooled")
 plot(g)
 dev.off()
 
