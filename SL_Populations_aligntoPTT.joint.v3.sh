@@ -68,9 +68,9 @@ H479_Pt171.PTMPTT.read.bam \
 H472_Pt169_AB.PTMPTT.read.bam \
 H470_Pt177_AB.PTMPTT.read.bam \
 Pgraminea_Illumina.read.bam \
-|bcftools call -m -Ov --ploidy 1 --skip-variants indels -o /home/yuzon/Populations/SNPcalling/Illumina.vcf
+|bcftools call -m -Ov --ploidy 1 --skip-variants indels -o ~/Populations/SNPcalling/Illumina.vcf
 
-cd /home/yuzon/Populations/SNPcalling/
+cd ~/Populations/SNPcalling/
 
 bgzip -c -f Illumina.vcf >Illumina.vcf.gz
 tabix -p vcf -f Illumina.vcf.gz
@@ -84,33 +84,33 @@ bgzip -f -c Illumina.flt.vcf >Illumina.flt.vcf.gz
 tabix -f -p vcf Illumina.flt.vcf.gz
 
 #### SNP call for Genome Assembly Data
-${harvest}/parsnp -c -v -r /home/yuzon/references/parsnp_ref/test.fa -d /home/yuzon/Populations/SNPcalling/parsnp_qry/parsnp_qry_2/ -o  /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2
-${harvest}/harvesttools -i /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.ggr -V /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf
-grep "#\|PASS" /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf >/home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.PASS.vcf
-vcftools --vcf /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf --extract-FORMAT-info GT --out /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.nucl
+${harvest}/parsnp -c -v -r ~/references/parsnp_ref/test.fa -d ~Populations/SNPcalling/parsnp_qry/parsnp_qry_2/ -o  ~/Populations/SNPcalling/parsnp_out/parsnp_out_2
+${harvest}/harvesttools -i ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.ggr -V ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf
+grep "#\|PASS" ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf >~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.PASS.vcf
+vcftools --vcf ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf --extract-FORMAT-info GT --out ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.nucl
 
-echo "##fileformat=VCFv4.2"|cat - /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf \
+echo "##fileformat=VCFv4.2"|cat - ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.vcf \
 |grep '#\|PASS' \
 |sed 's/NA/\./g' \
 |sed 's/chr/chrPTT_/g' \
 |sed 's/01_contig/0-1_contig/g' \
- >/home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf
+ >~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf
 
-bgzip -f -c /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf > /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz
-tabix -f -p vcf /home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz
+bgzip -f -c ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf > ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz
+tabix -f -p vcf ~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz
 
 /data/biosoftware/bcftools/bcftools-1.4/bcftools merge \
-/home/yuzon/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz \
-/home/yuzon/Populations/SNPcalling/Illumina.flt.vcf.gz \
--Oz -o /home/yuzon/Populations/SNPcalling/phylo_map_to_PTT/Merged.vcf.gz
+~/Populations/SNPcalling/parsnp_out/parsnp_out_2/parsnp.format.vcf.gz \
+~/Populations/SNPcalling/Illumina.flt.vcf.gz \
+-Oz -o ~/Populations/SNPcalling/phylo_map_to_PTT/Merged.vcf.gz
 
 ### keep loci with at least one snp allele
 cd phylo_map_to_PTT
 
 /data/biosoftware/bcftools/bcftools-1.4/bcftools view --types snps \
-/home/yuzon/Populations/SNPcalling/phylo_map_to_PTT/Merged.vcf.gz \
--Oz -o /home/yuzon/Populations/SNPcalling/phylo_map_to_PTT/Merged.snps.vcf.gz
-tabix -f /home/yuzon/Populations/SNPcalling/phylo_map_to_PTT/Merged.snps.vcf.gz
+~/Populations/SNPcalling/phylo_map_to_PTT/Merged.vcf.gz \
+-Oz -o ~/Populations/SNPcalling/phylo_map_to_PTT/Merged.snps.vcf.gz
+tabix -f ~/Populations/SNPcalling/phylo_map_to_PTT/Merged.snps.vcf.gz
 
 vcftools --max-missing 1.00 --recode  \
 --gzvcf Merged.snps.vcf.gz \
