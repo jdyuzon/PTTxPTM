@@ -36,6 +36,7 @@ SegregationDistortion_twospeed.R
 SL_Populations_aligntoPTT.parallel.v2.sh
 ```
 ### b. Divergence Statistics (Dxy and Fist)
+requires scripts from https://github.com/simonhmartin/genomics_general
 ```
 SL_Populations_aligntoPTT.joint.v3.sh
 SL_DivergenceGeneFlow.v2.sh
