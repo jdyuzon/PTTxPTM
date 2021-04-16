@@ -46,9 +46,9 @@ fastqc=/data/biosoftware/FastQC/FastQC/fastqc
 ##########################################################
 echo "Directories"
 ##########################################################
-refPTT=/home/yuzon/references/hybrid_references/PTT_0-1_assembly.v14.fa
-refPTM=/home/yuzon/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
-merged_genome=/home/yuzon/references/hybrid_references/merged_genome_PTTxPTM.fasta
+refPTT=~/references/hybrid_references/PTT_0-1_assembly.v14.fa
+refPTM=~/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
+merged_genome=~/references/hybrid_references/merged_genome_PTTxPTM.fasta
 ####index fasta
 #bwa index ${main_dir%/Populations/}/references/hybrid_references/merged_genome_PTTxPTM.fasta
 
@@ -351,7 +351,7 @@ tabix -f -p vcf ${entry}.PTMPTT.flt2.vcf.gz
 #rm ${entry}.PTMPTT.fasta.fai
 
 #### make sure that you get the right bed ranges because vcf to fasta can change the coordinates
-bedtools getfasta -tab -fi ${entry}.PTMPTT.fasta -bed /home/yuzon/PTTxPTMtest/PTTxPTMcompare/SegregationDistortion_files/paml/paml_pttptm_2/allgenes.bed \
+bedtools getfasta -tab -fi ${entry}.PTMPTT.fasta -bed ~/PTTxPTMtest/PTTxPTMcompare/SegregationDistortion_files/paml/paml_pttptm_2/allgenes.bed \
 |sed 's/N/?/g'| awk -v variable="$entry" '{print $1 "_" variable "\t" $2} '  >${entry}.allgenes.fasta
 
 ###replace N with ? (undetermined nucleotide or amino acid) for PAML 
@@ -371,7 +371,7 @@ bedtools merge -i ${entry}.tmp.bed -s -c 6 -o distinct | awk 'BEGIN { OFS = "\t"
 ############################################################
 cd ${nucmer}
 
-nucmer -mum -mincluster 100 -minmatch 1000 --prefix=${nucmer}${entry} /home/yuzon/references/hybrid_references/PTT_0-1_assembly.v14.fa ${snps}${entry}.PTMPTT.fasta
+nucmer -mum -mincluster 100 -minmatch 1000 --prefix=${nucmer}${entry} ~/references/hybrid_references/PTT_0-1_assembly.v14.fa ${snps}${entry}.PTMPTT.fasta
 delta-filter -r -q ${nucmer}${entry}.delta >${nucmer}${entry}.filter
 show-snps -Clr ${nucmer}${entry}.filter > ${nucmer}${entry}.snps
 show-coords ${nucmer}${entry}.delta > ${nucmer}${entry}.show-coords
