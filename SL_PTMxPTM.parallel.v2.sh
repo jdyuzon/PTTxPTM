@@ -48,7 +48,7 @@ echo "Directories"
 refPTT=${main_dir%/FGOB10Ptm-1_X_SG1_ptm/}/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
 refPTM=${main_dir%/FGOB10Ptm-1_X_SG1_ptm/}/references/Wyatt_Ellwood_assemblies/SG1.fasta
 
-merged_genome=/home/yuzon/references/PTMxPTM_genome/merged_genome_PTMxPTM.fasta
+merged_genome=${main_dir%/FGOB10Ptm-1_X_SG1_ptm/}references/PTMxPTM_genome/merged_genome_PTMxPTM.fasta
 ####index fasta
 ###bwa index ${main_dir%/FGOB10Ptm-1_X_SG1_ptm/}/references/hybrid_references/merged_genome_PTMxPTM.fasta
 
