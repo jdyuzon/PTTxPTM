@@ -22,11 +22,11 @@
 #SBATCH --partition=standard
 
 ########################################################################
-refPTT=/home/yuzon/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
-refPTM=/home/yuzon/references/Wyatt_Ellwood_assemblies/SG1.fasta
-snps=/home/yuzon/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/
-parsnp_qry=/home/yuzon/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/parsnp_qry/
-parsnp_out=/home/yuzon/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/parsnp_out/
+refPTT=~/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta
+refPTM=~/references/Wyatt_Ellwood_assemblies/SG1.fasta
+snps=~/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/
+parsnp_qry=~/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/parsnp_qry/
+parsnp_out=~/FGOB10Ptm-1_X_SG1_ptm/SNPcalling/parsnp_out/
 
 #run bash to submit parallel jobs on the cluster
 ### example: sbatch SL_PTTxPTMhybrid.parallel.sh 100 /home/yuzon/PTTxPTMtest/
