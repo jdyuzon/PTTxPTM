@@ -30,14 +30,14 @@ module load python
 ##grep 'CH' Merged.flt.GT.FORMAT|cat - tmp >Merged.flt.GT.FORMAT.geno
 
 ######format geno file: only PTT and PTM######################
-cd /home/yuzon/Populations/SNPcalling/phylo_map_to_PTT
+cd ~/Populations/SNPcalling/phylo_map_to_PTT
 
 sed 's/PTT_//g' Merged.flt.dxy.vcf >Merged.ptmptt.mis.recode.vcf
 
-python ~/BioSoft/genomics_general-master/VCF_processing/parseVCF.py \
+python genomics_general-master/VCF_processing/parseVCF.py \
 -i Merged.ptmptt.mis.recode.vcf --ploidy 1 -o Merged.pttptm.geno
 
-python popgenWindows.py -w 50000 -s 5000 -m 10 \
+python genomics_general-master/popgenWindows.py -w 50000 -s 5000 -m 10 \
 -g Merged.pttptm.geno -o divergence.csv \
 -f haplo -T 5 --popsFile ptmptt_pops.txt \
 --writeFailedWindows \
@@ -50,13 +50,14 @@ sed 's/PTT_//g' divergence.csv |grep -v 'contig' >divergence.csv.tmp
 #######################################################
 ######## ABBA-BABA and f-stats: Simon Martin ##########
 #######################################################
+### requires scripts from https://github.com/simonhmartin/genomics_general
 
 ######format geno file######################
-python ~/BioSoft/genomics_general-master/VCF_processing/parseVCF.py -i Derived.bi.abbababa.vcf --ploidy 1 -o Merged.bi.pgptmpttptr.csv
+python genomics_general-master/VCF_processing/parseVCF.py -i Derived.bi.abbababa.vcf --ploidy 1 -o Merged.bi.pgptmpttptr.csv
 
 ########## Sliding window ABBA-BABA ###############
 module load python/3.7.1
-python3 ~/BioSoft/genomics_general-master/ABBABABAwindows.py \
+python3 genomics_general-master/ABBABABAwindows.py \
 -g Merged.bi.pgptmpttptr.csv --windType coordinate \
 -o abbababa.csv -P1 pg -P2 ptm -P3 ptt -O ptr \
 --popsFile pops.abbababa.txt -w 500000 -m 100 -s 100000 --T 1 --writeFailedWindows -f haplo \
@@ -66,7 +67,7 @@ python3 ~/BioSoft/genomics_general-master/ABBABABAwindows.py \
 sed 's/PTT_//g' abbababa.csv |grep -v 'contig' >abbababa.csv.tmp
 
 ######### Genome wide ABBA-BABA ###################
-python /home/yuzon/BioSoft/genomics_general-master/freq.py -g Derived.bi.abbababa.vcf \
+python genomics_general-master/freq.py -g Derived.bi.abbababa.vcf \
 -p pg -p ptm -p ptt -p ptr \
 --popsFile pops.abbababa.txt --target derived \
 -o derFreq.tsv.gz
