@@ -374,8 +374,8 @@ bedtools maskfasta -fi $merged_genome -bed ${entry}.mask.bed -fo ${entry}.PTMPTT
 ############################################################
 #### Split isolate.fasta files to PTT and PTM ##############
 ############################################################
-bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed /home/yuzon/references/hybrid_references/PTM_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTM.fasta
-bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed /home/yuzon/references/hybrid_references/PTT_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTT.fasta
+bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed ~/references/hybrid_references/PTM_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTM.fasta
+bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed ~/references/hybrid_references/PTT_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTT.fasta
 
 
 
@@ -392,7 +392,7 @@ bedtools merge -i ${entry}.tmp.bed -s -c 6 -o distinct | awk 'BEGIN { OFS = "\t"
 ############################################################
 #### Nucmer: get PTT coordinates for recombination blocks ##
 ############################################################
-nucmer -mum -mincluster 100 -minmatch 1000 --prefix=${nucmer}${entry} /home/yuzon/references/hybrid_references/PTT_0-1_assembly.v14.fa ${entry}.PTMPTT.fasta
+nucmer -mum -mincluster 100 -minmatch 1000 --prefix=${nucmer}${entry} ~/references/hybrid_references/PTT_0-1_assembly.v14.fa ${entry}.PTMPTT.fasta
 delta-filter -r -q ${nucmer}${entry}.delta >${nucmer}${entry}.filter
 show-snps -Clr ${nucmer}${entry}.filter > ${nucmer}${entry}.snps
 show-coords ${nucmer}${entry}.delta > ${nucmer}${entry}.show-coords
