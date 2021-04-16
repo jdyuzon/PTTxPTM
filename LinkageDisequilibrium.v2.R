@@ -40,7 +40,7 @@ goodChrOrder <- c(1:12,"m","0-1_contig_32","0-1_contig_39",
 #r2_matrix<-as.matrix(read.table("all.r2.ptm.matrix.ld", header = FALSE,sep = "\t",na.strings = "nan"))
 #r<-as.data.frame(read.table("all.r2.ptm.ld", header = TRUE))
 #r_inter<-as.data.frame(read.table("all.r.ptm.inter.ld", header = TRUE))
-odds_raw<-as.data.frame(read.table("splitfiles/all.inter.odds",sep = " ", header = FALSE))
+odds_raw<-as.data.frame(read.table("all.inter.odds",sep = " ", header = FALSE))
 
 #######make odds dataframe symmetric##############
 odds_rev<-NULL
