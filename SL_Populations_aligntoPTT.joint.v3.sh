@@ -25,16 +25,16 @@ echo "Software"
 ###########################################################
 ##module load java/x64/8u121
 
-merged_genome=/home/yuzon/references/hybrid_references/merged_genome_PTTxPTM.fasta
+merged_genome=~/references/hybrid_references/merged_genome_PTTxPTM.fasta
 
 harvest=/data/biosoftware/harvest/harvest
-Sorted=/home/yuzon/Populations/aligned/sorted/
+Sorted=~/Populations/aligned/sorted/
 
 
 ##########################################################
 echo "Remove - in squence names"
 ##########################################################
-for each in /home/yuzon/Populations/SNPcalling/parsnp_qry/mitochondria/*fasta
+for each in ~/Populations/SNPcalling/parsnp_qry/mitochondria/*fasta
 do
 	sed -i 's/-//g' $each
 done
