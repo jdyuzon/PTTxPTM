@@ -128,7 +128,7 @@ echo "Trim adaptors, min quality =30, min length =40"
 cd ${Raw_reads}
 
 /data/biosoftware/bbmap/bbmap/bbduk.sh -Xmx1g \
-in=$entry.fastq out=${trimmed}$entry.trim.fastq ref=/home/yuzon/BioSoft/IonTorrent_adapters.fa \
+in=$entry.fastq out=${trimmed}$entry.trim.fastq ref=~/BioSoft/IonTorrent_adapters.fa \
  ktrim=r k=23 mink=11 hdist=1 tpe tbo minlen=40 trimq=10 qtrim=rl
 
 ##################FastQC##############################
@@ -298,8 +298,8 @@ bedtools maskfasta -fi $merged_genome -bed ${entry}.mask.bed -fo ${entry}.PTMPTT
 #### Split isolate.fasta files to PTT and PTM ##############
 ############################################################
 
-bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed /home/yuzon/references/hybrid_references/PTM_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTM.fasta
-bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed /home/yuzon/references/hybrid_references/PTT_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTT.fasta
+bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed ~/references/hybrid_references/PTM_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTM.fasta
+bedtools getfasta  -fi ${entry}.PTMPTT.fasta -bed ~/references/hybrid_references/PTT_tracks.bed|sed 's/:.*//g' > ${parsnp_qry}${entry}.PTT.fasta
 
 
 
@@ -316,14 +316,14 @@ bedtools merge -i ${entry}.tmp.bed -s -c 6 -o distinct | awk 'BEGIN { OFS = "\t"
 ############################################################
 #### Nucmer: get PTT coordinates for recombination blocks ##
 ############################################################
-nucmer -mum -mincluster 100 -minmatch 40 --prefix=${nucmer}${entry} /home/yuzon/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta ${entry}.PTMPTT.fasta
+nucmer -mum -mincluster 100 -minmatch 40 --prefix=${nucmer}${entry} ~/references/hybrid_references/PTM_FGOB10Ptm-1_assembly.v7.fasta ${entry}.PTMPTT.fasta
 delta-filter -r -q ${nucmer}${entry}.delta >${nucmer}${entry}.filter
 show-snps -Clr ${nucmer}${entry}.filter > ${nucmer}${entry}.snps
 show-coords ${nucmer}${entry}.delta > ${nucmer}${entry}.show-coords
 grep -v "contig.*PTM" ${nucmer}${entry}.show-coords \
 |awk '{print $12 "\t" $13 "\t" $1 "\t" $2 "\t" $4 "\t" $5}'>${nucmer}${entry}.show-coords.txt
 
-nucmer -mum -mincluster 65 -minmatch 40 --prefix=${nucmer}${entry}.alt  /home/yuzon/references/Wyatt_Ellwood_assemblies/15A.fasta ${entry}.PTMPTT.fasta
+nucmer -mum -mincluster 65 -minmatch 40 --prefix=${nucmer}${entry}.alt  ~/references/Wyatt_Ellwood_assemblies/15A.fasta ${entry}.PTMPTT.fasta
 delta-filter -r -q ${nucmer}${entry}.alt.delta >${nucmer}${entry}.alt.filter
 show-snps -Clr ${nucmer}${entry}.alt.filter > ${nucmer}${entry}.alt.snps
 
