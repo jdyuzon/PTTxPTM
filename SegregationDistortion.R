@@ -11,97 +11,19 @@ library(RColorBrewer)
 ############################################################################
 
 ############ Mapping to PTT and PTM genomes ##############################
-### Rough Quality: PTT and PTM coordinates overlap
-bed<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/PRIMER_data/maptoPTTPTM_04072020/all.PTMPTT.flt.nuclmito.bed", header = FALSE,sep = "\t")
-View(bed)
-
 goodChrOrder <- c(paste("chr",c(1:12),sep=""),"mitochondria")
 goodIsoOrder <- c(1:70,72:79,"79b",80:120)
-bed$V2 <- factor(bed$V2,levels=goodChrOrder)
-bed$V7 <- factor(bed$V7,levels=goodIsoOrder)
-
-
-
-all.PTMPTT.flt.nuclmito.bed<-ggplot()+
-  geom_rect(data=bed, mapping=aes(xmin=V3, xmax=V4, ymin=0, ymax=1, fill=V1), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM"),values=c("red", "blue"))+
-  facet_grid(V7~V2,scales="free", space="free_x", switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-
-##### MAT loci around chrPTT_9:633341-636165
-matmito<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/verify_04072020/all.matmito.bed", header = FALSE,sep = "\t")
-matmito$V7 <- factor(matmito$V7,levels=goodIsoOrder)
-
-
-ggplot()+
-  geom_rect(data=matmito, mapping=aes(xmin=V3, xmax=V4, ymin=0, ymax=1, fill=V1), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM"),values=c("red", "cyan"))+
-  facet_grid(V7~V2,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-#### Intermediate (common and uniq regions to PTT and PTM): PTM coordinates mapped to PTT 
-interbed<-read.table("~/Downloads/testing_ground/all.common_uniq.bed", header = FALSE,sep = "\t")
-inter_matmito<-read.table("~/Downloads/testing_ground/all.common_uniq.matmito.bed", header = FALSE,sep = "\t")
-
-interbed$V1 <- factor(interbed$V1,levels=goodChrOrder)
-interbed$V5 <- factor(interbed$V5,levels=goodIsoOrder)
-inter_matmito$V1 <- factor(inter_matmito$V1,levels=goodChrOrder)
-inter_matmito$V5 <- factor(inter_matmito$V5,levels=goodIsoOrder)
-
-
-ggplot()+
-  geom_rect(data=na.omit(interbed), mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free", space="free_x", switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-
-ggplot()+
-  geom_rect(data=inter_matmito, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=0),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
 
 
 #### Finer Quality (extend ranges to nearest similar allele): PTM coordinates mapped to PTT 
 blockbed<-read.table("~/Desktop/Postdoc_Pteres/QuantGen/Recombination Blocks/all.common_unique.blocks.bed.tmp", header = FALSE,sep = "\t",fill=TRUE)
-block_matmito<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.matmito.bed", header = FALSE,sep = "\t", fill=TRUE)
-block_contigs<-read.table("~/Downloads/testing_ground/all.contigs.blocks.bed.tmp", header = FALSE,sep = "\t", fill=TRUE)
+
 #### isolate order for publication
 goodIsoOrder <- c("1","2","3","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","25","27","28","29","30","31","32","33","34","36","37","38","39","40","41","42","43","45","46","47","48","49","50","51","52","53","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","72","75","76","77","79b","81","82","83","84","85","86","87","88","90","91","92","93","95","96","97","98","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120")
 
 blockbed$sizes<-blockbed$V3-blockbed$V2
 blockbed$V1 <- factor(blockbed$V1,levels=goodChrOrder)
 blockbed$V5 <- factor(blockbed$V5,levels=goodIsoOrder)
-block_matmito$V1 <- factor(block_matmito$V1,levels=goodChrOrder)
-block_matmito$V5 <- factor(block_matmito$V5,levels=goodIsoOrder)
-block_contigs$V5 <- factor(block_contigs$V5,levels=goodIsoOrder)
 
 ggplot()+
   geom_rect(data=na.omit(blockbed), mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
@@ -116,30 +38,6 @@ ggplot()+
         panel.spacing=unit(0, "lines"))
 
 
-ggplot()+
-  geom_rect(data=block_matmito, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=0),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-ggplot()+
-  geom_rect(data=block_contigs, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
 #####Histogram of block sizes by chromosomes
 blockbed$sizes<-blockbed$V3-blockbed$V2
 ggplot(blockbed, aes(x=log10(sizes), fill=V4)) +
@@ -148,41 +46,6 @@ ggplot(blockbed, aes(x=log10(sizes), fill=V4)) +
   facet_wrap(~V1,scales="free")
 
 ####################### Mapping to PTT genome ##############################
-
-#### Intermediate (common and uniq regions to PTT and PTM): PTM coordinates mapped to PTT 
-interPTT<-read.table("~/Downloads/testing_ground/all.common_uniq.bed", header = FALSE,sep = "\t")
-interPTT_matmito<-read.table("~/Downloads/testing_ground/all.common_uniq.matmito.bed", header = FALSE,sep = "\t")
-
-interPTT$V1 <- factor(interPTT$V1,levels=goodChrOrder)
-interPTT$V5 <- factor(interPTT$V5,levels=goodIsoOrder)
-interPTT_matmito$V1 <- factor(interPTT_matmito$V1,levels=goodChrOrder)
-interPTT_matmito$V5 <- factor(interPTT_matmito$V5,levels=goodIsoOrder)
-
-
-ggplot()+
-  geom_rect(data=na.omit(interPTT), mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free", space="free_x", switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-
-ggplot()+
-  geom_rect(data=interPTT_matmito, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=0),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
 
 #### Finer Quality (extend ranges to nearest similar allele): PTM coordinates mapped to PTT 
 blockPTT<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.bed", header = FALSE,sep = "\t")
@@ -218,100 +81,6 @@ ggplot()+
         strip.text.x = element_text(size=8, angle=0),
         strip.text.y.left = element_text(angle = 0),
         panel.spacing=unit(0, "lines"))
-
-####################### Mapping to PTM genome ##############################
-
-#### Intermediate (common and uniq regions to PTT and PTM): PTM coordinates mapped to PTT 
-interPTM<-read.table("~/Downloads/testing_ground/all.common_uniq.bed", header = FALSE,sep = "\t")
-interPTM_matmito<-read.table("~/Downloads/testing_ground/all.common_uniq.matmito.bed", header = FALSE,sep = "\t")
-
-interPTM$V1 <- factor(interPTM$V1,levels=goodChrOrder)
-interPTM$V5 <- factor(interPTM$V5,levels=goodIsoOrder)
-interPTM_matmito$V1 <- factor(interPTM_matmito$V1,levels=goodChrOrder)
-interPTM_matmito$V5 <- factor(interPTM_matmito$V5,levels=goodIsoOrder)
-
-
-
-ggplot()+
-  geom_rect(data=na.omit(interPTM), mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free", space="free_x", switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-
-ggplot()+
-  geom_rect(data=interPTM_matmito, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=0),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-#### Finer Quality (extend ranges to nearest similar allele): PTM coordinates mapped to PTT 
-blockPTM<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.bed", header = FALSE,sep = "\t")
-blockPTM_matmito<-read.table("~/Downloads/testing_ground/all.common_unique.blocks.matmito.bed", header = FALSE,sep = "\t")
-
-blockPTM$V1 <- factor(blockPTM$V1,levels=goodChrOrder)
-blockPTM$V5 <- factor(blockPTM$V5,levels=goodIsoOrder)
-blockPTM_matmito$V1 <- factor(blockPTM_matmito$V1,levels=goodChrOrder)
-blockPTM_matmito$V5 <- factor(blockPTM_matmito$V5,levels=goodIsoOrder)
-
-
-ggplot()+
-  geom_rect(data=na.omit(blockPTM), mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free", space="free_x", switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=90),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-
-ggplot()+
-  geom_rect(data=blockPTM_matmito, mapping=aes(xmin=V2, xmax=V3, ymin=0, ymax=1, fill=V4), alpha=0.5)+
-  scale_fill_manual(breaks = c("PTT", "PTM","common"),values=c("red", "blue","purple"))+
-  facet_grid(V5~V1,scales="free",  switch="both")+
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        strip.text.x = element_text(size=8, angle=0),
-        strip.text.y.left = element_text(angle = 0),
-        panel.spacing=unit(0, "lines"))
-
-#####################SNP Verify
-interPTM<-read.table("~/Downloads/testing_ground/all.flt3.contigs", header = FALSE,sep = "\t")
-interPTM$V1 <- factor(interPTM$V1,levels=goodChrOrder)
-interPTM$V5 <- factor(interPTM$V5,levels=goodIsoOrder)
-
-
-interPTM<-interPTM[ which(interPTM$V4=='PTM'), ]
-ggplot()+
-geom_vline(data=na.omit(interPTM), mapping=aes(xintercept=V2), color="blue", alpha=0.5, size =5) +
-scale_fill_manual(breaks = c("PTT", "PTM"),values=c("white", "blue"))+
-facet_grid(V5~V1,scales="free", space="free_x", switch="both")+
-theme(axis.ticks.x=element_blank(),
-     axis.ticks.y=element_blank(),
-    axis.text.x = element_blank(),
-   axis.text.y = element_blank(),
-  strip.text.x = element_text(size=8, angle=90),
- strip.text.y.left = element_text(angle = 0),
- panel.spacing=unit(0, "lines"))
-
-
 
 ############################################################################
 ######################Segregation Distortion: Hybrid Population#############
