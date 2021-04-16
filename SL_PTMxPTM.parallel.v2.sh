@@ -117,8 +117,6 @@ mkdir $Depth_dir
 
 mkdir $snps
 
-mkdir $gridss
-mkdir $manta
 mkdir $parsnp_qry
 mkdir $parsnp_out
 
