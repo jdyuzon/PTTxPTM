@@ -113,7 +113,7 @@ df_PTM<-df[c(1,2,3,grep("PTM.support", names(df)))]
 df$obs_ptt<-apply(df_PTT[3:109], 1, function(x) length(which(x=="PTT")))
 df$obs_ptm<-apply(df_PTM[3:109], 1, function(x) length(which(x=="PTM")))
 df$sum<-df$obs_ptt+df$obs_ptm
-df <- subset(df, sum>=16)
+df <- subset(df, sum>=90)
 df$exp_ptt<-0.5*df$sum
 df$exp_ptm<-0.5*df$sum
 df$freq_ptt<-df$obs_ptt/df$sum
