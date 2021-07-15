@@ -37,13 +37,7 @@ Example command reads in r and r2 as a matrix, and as a dataframe
 ```
 Rscript --vanilla LinkageDisequilibrium.v2.R all.r.ptm.matrix.ld all.r2.ptm.matrix.ld all.r2.ptm.ld all.r.ptm.inter.ld
 ```
-## 2. Plant Pathogen Genome Compartmentalization
-Calculates the repeat and gene density with respect to distance from telomeres. 
-Also cross references Segregation Distortion with repeat and gene density
-```
-SegregationDistortion_twospeed.R
-```
-## 3. Field Population
+## 2. Field Population
 ### a. Cleans and filters reads
 Illumina reads of Ptt and Ptm isolates from the Iranian population can be found on NCBI-SRA
 ```
