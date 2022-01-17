@@ -157,10 +157,11 @@ bgzip -f -c Merged.ptt.flt2.recode.vcf >Merged.ptt.flt2.recode.vcf.gz
 tabix -f Merged.ptm.flt2.recode.vcf.gz
 tabix -f Merged.ptt.flt2.recode.vcf.gz
 
-bcftools merge Merged.ptm.flt2.recode.vcf.gz Merged.ptt.flt2.recode.vcf.gz -Ov > Merged.flt.dxy.tmp.vcf
+bcftools merge Merged.ptm.flt2.recode.vcf.gz Merged.ptt.flt2.recode.vcf.gz -Ov \
+|vcftools --max-missing 0.9 --recode --gzvcf -  --out  Merged.flt.dxy.tmp
 
 /data/biosoftware/bcftools/bcftools-1.4/bcftools view --types snps -c1 \
-Merged.flt.dxy.tmp.vcf > Merged.flt.dxy.vcf
+Merged.flt.dxy.tmp.recode.vcf > Merged.flt.dxy.vcf
 
 
 echo "############ Get Derived/Polarized SNPs #########################"
