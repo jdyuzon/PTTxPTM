@@ -53,3 +53,7 @@ Requires scripts from https://github.com/simonhmartin/genomics_general
 ```
 SL_DivergenceGeneFlow.v2.sh
 ```
+Generates Figure for divergence statistics
+```
+SL_DivergenceGeneFlow.v2.sh
+```
