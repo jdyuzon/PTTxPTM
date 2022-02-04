@@ -6,7 +6,7 @@ Requires orthologous "all genes", "biosynthetic gene clusters", "effectors", "sy
 ```
 Circlize_pttxptm.R
 ```
-## 2. Lab Crosses
+## 1. Lab Crosses
 ### a. Fitness of parents, intraspecies, and interspecies progeny
 Fitness data is stored in PterespopsonKombar.csv
 ```
