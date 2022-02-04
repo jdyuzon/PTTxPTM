@@ -1,13 +1,11 @@
-# 0-1 PTT and FGOBPtm-1 PTM Synteny of orthologous genes 
+# Study of genetic incompatibilities in the plant pathogen Pyrenophora teres using lab crosses and field populations
 scripts for analyzing Pyrenophora teres subspecies (PTT and PTM). 
-## 2. Circos Plot
-### a. Requires orthologous "all genes", "biosynthetic gene clusters", "effectors", "synteny chords" files
-
+## 2. 0-1 PTT and FGOBPtm-1 PTM Synteny of orthologous genes
+### a. Circos Plot
+Requires orthologous "all genes", "biosynthetic gene clusters", "effectors", "synteny chords" files
 ```
 Circlize_pttxptm.R
 ```
-# Study of genetic incompatibilities in the plant pathogen Pyrenophora teres using lab crosses and field populations 
-scripts for analyzing Pyrenophora teres subspecies (PTT and PTM). 
 ## 2. Lab Crosses
 ### a. Fitness of parents, intraspecies, and interspecies progeny
 Fitness data is stored in PterespopsonKombar.csv
