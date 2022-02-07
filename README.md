@@ -4,7 +4,7 @@ scripts for analyzing Pyrenophora teres subspecies (PTT and PTM).
 ### a. Circos Plot
 Requires orthologous "all genes", "biosynthetic gene clusters", "effectors", "synteny chords" files
 ```
-Circlize_pttxptm.R
+CirclePlot.bash.R
 ```
 ## 2. Lab Crosses
 ### a. Fitness of parents, intraspecies, and interspecies progeny
