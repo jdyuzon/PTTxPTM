@@ -43,6 +43,10 @@ Example command reads in r and r2 as a matrix, and as a dataframe
 ```
 Rscript --vanilla LinkageDisequilibrium.v2.R all.r.ptm.matrix.ld all.r2.ptm.matrix.ld all.r2.ptm.ld all.r.ptm.inter.ld
 ```
+Plots LD in PTT and PTM genomes
+```
+DMIPlot.bash.R
+```
 ## 3. Field Population
 ### a. Cleans and filters reads
 Illumina reads of Ptt and Ptm isolates from the Iranian population can be found on NCBI-SRA
