@@ -5,20 +5,14 @@ library(ComplexHeatmap)
 
 ###Files
 PTTxPTM<-read.table("PTTxPTM_tracks.nuclmito.txt", header=FALSE, sep="\t")
-PTTxPTM_chords<-read.table("PTTvsPTM.nuclearchrmitochondria.masked.show-coords.txt", header=FALSE, sep="\t")
-PTTxPTM_inversions_chords<-read.table("PTTvsPTM.nuclearchr_mito.masked.inversions.show-coords", header=FALSE, sep="\t")
-PTTxPTM_r2_chords<-read.table("r_inter.1perc.trim.rpos.genic.show-coords.txt", header=FALSE, sep="\t")
-PTTxPTM_odds_chords<-read.table("odds_top.1perc.trim.ptmptt.genic_nogene.show-coords.txt", header=FALSE, sep="\t")
+PTTxPTM_chords<-read.table("PTTvsPTM.nuclearchrmitochondria.masked.show-coords.orthologous.txt", header=FALSE, sep="\t")
 
-PTTxPTM_inversions<-read.table("PTTvsPTM.nuclear_mito.masked.inversions.tracks.txt", header=FALSE, sep="\t")
-PTTxPTM_genes<-read.table("PTTxPTM_tracks.nuclmito_genedensity.bed", header=FALSE, sep="\t")
-PTTxPTM_repeats<-read.table("PTTxPTM_tracks.nuclmito_repeat.bed", header=FALSE, sep="\t")
-PTTxPTM_effectors<-read.table("PTTxPTM_tracks.nuclmito_effectors.bed", header=FALSE, sep="\t")
-PTTxPTM_bsc<-read.table("PTTxPTM_tracks.nuclmito_bsc.bed", header=FALSE, sep="\t")
+PTTxPTM_genes<-read.table("PTTvsPTM_tracks.genes.orthologous.bed", header=FALSE, sep="\t")
+PTTxPTM_effectors<-read.table("PTTvsPTM_tracks.effector.orthologous.bed", header=FALSE, sep="\t")
+PTTxPTM_bsc<-read.table("PTTvsPTM_tracks.bsc.orthologous.bed", header=FALSE, sep="\t")
 PTTxPTM_mat<-read.table("matloci.bed", header=FALSE, sep="\t")
 PTTxPTM_pav<-read.table("PTTxPTM_tracks.nuclmito_pav.bed", header=FALSE, sep="\t")
 PTTxPTM_shared<-read.table("PTTvsPTM.nuclearchrmitochondria.shared.txt", header=FALSE, sep="\t")
-###recombination breakpoints (red)
 ###segregation distortion (blue/red histogram)
 
 
@@ -37,14 +31,10 @@ PTTxPTM<-PTTxPTM[match(c(goodPTMOrder, goodPTTOrder), PTTxPTM$chr),]
 PTTxPTM_chords$V2<-gsub("mitochondrial_contig","chrPTM_m",PTTxPTM_chords$V2)
 PTTxPTM_chords$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_chords$V1)
 
-PTTxPTM_inversions$V1<-gsub("mitochondrial_contig","chrPTM_m",PTTxPTM_inversions$V1)
-PTTxPTM_inversions$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_inversions$V1)
 
 PTTxPTM_genes$V1<-gsub("mitochondrial_contig","chrPTM_m",PTTxPTM_genes$V1)
 PTTxPTM_genes$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_genes$V1)
 
-PTTxPTM_repeats$V1<-gsub("mitochondrial_contig","chrPTM_m",PTTxPTM_repeats$V1)
-PTTxPTM_repeats$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_repeats$V1)
 
 PTTxPTM_effectors$V1<-gsub("mitochondrial_contig","chrPTM_m",PTTxPTM_effectors$V1)
 PTTxPTM_effectors$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_effectors$V1)
@@ -58,10 +48,7 @@ PTTxPTM_shared$V1<-gsub("0-1_contig_m86","chrPTT_m",PTTxPTM_shared$V1)
 ########### Genome Compare Plot #############
 ##############################################
 
-#png("Circlize_plot_may282020.png", type="cairo", height=1000,width=2000,units = "px", pointsize = 12,)
-pdf("Circlize_plot_July102020.pdf", height=16, width=23)
-#pdf("Circlize_plot_r2_may282020.pdf", height=16, width=23)
-#pdf("Circlize_plot_oddsratio_may282020.pdf", height=16, width=23)
+pdf("Circlize_plot_Feb072022.pdf", height=16, width=23)
 par(mar=rep(0,4))
 circos.clear()
 ### Basic circos graphic parameters
@@ -85,16 +72,6 @@ PTTPTM_res =circos.trackPlotRegion(ylim = c(-1, 0), factors = PTTxPTM$chr, track
    circos.text(x=mean(xlim), y=-0.5, labels=name, cex = 0.6,col = "black", facing = "inside",niceFacing = TRUE)
                        })
 
-######### Presence/Absence Variation ##########
-#PTTxPTM_pav$colors<-PTTxPTM_pav$V5
-#PTTxPTM_pav$colors<-gsub("present",add_transparency("darkorchid3",0.5),PTTxPTM_pav$colors)
-#PTTxPTM_pav$colors<-gsub("absent",add_transparency("thistle",0.5),PTTxPTM_pav$colors)
-#for(i in seq_len(nrow(PTTxPTM_pav))) {
-#   ylim = get.cell.meta.data("ylim")
-#   circos.rect(xleft=PTTxPTM_pav[i,"V2"], ybottom=ylim[1]+3.5, xright=PTTxPTM_pav[i,"V3"], ytop=ylim[1]+4,
-#               sector.index=PTTxPTM_pav$V1[i],
-#               col = PTTxPTM_pav$colors[i], border=NA)
-#}
 
 for(i in seq_len(nrow(PTTxPTM_shared))) {
    ylim = get.cell.meta.data("ylim")
@@ -104,24 +81,22 @@ for(i in seq_len(nrow(PTTxPTM_shared))) {
 }
 
 ######### Gene Density ##########
-gene_col=colorRamp2(c(0,100,200,300),
-                    c("white","gray","dimgray","black"), transparency = 0.5)
+#gene_col=colorRamp2(c(0,100,200,300),
+#                    c("white","gray","dimgray","black"), transparency = 0.5)
+#for(i in seq_len(nrow(PTTxPTM_genes))) {
+#   ylim = get.cell.meta.data("ylim")
+#   circos.rect(xleft=PTTxPTM_genes[i,"V2"], ybottom=ylim[1]+1.1, xright=PTTxPTM_genes[i,"V3"], ytop=ylim[1]+1.5, 
+#               sector.index=PTTxPTM_genes$V1[i],
+#               col = gene_col(PTTxPTM_genes$V4[i]), border=NA)
+#}
+
 for(i in seq_len(nrow(PTTxPTM_genes))) {
    ylim = get.cell.meta.data("ylim")
-   circos.rect(xleft=PTTxPTM_genes[i,"V2"], ybottom=ylim[1]+1.1, xright=PTTxPTM_genes[i,"V3"], ytop=ylim[1]+1.5, 
+   circos.rect(xleft=PTTxPTM_genes[i,"V2"], ybottom=ylim[1]+1.1, xright=PTTxPTM_genes[i,"V3"], ytop=ylim[1]+1.5,
                sector.index=PTTxPTM_genes$V1[i],
-               col = gene_col(PTTxPTM_genes$V4[i]), border=NA)
+               col = "dimgray", border=NA)
 }
-########## Repeats #############
-PTTxPTM_repeats$colors<-PTTxPTM_repeats$V5
-PTTxPTM_repeats$colors<-gsub("TE","salmon",PTTxPTM_repeats$colors)
-PTTxPTM_repeats$colors<-gsub("low-simple_repeat","lightgoldenrodyellow",PTTxPTM_repeats$colors)
-for(i in seq_len(nrow(PTTxPTM_repeats))) {
-   ylim = get.cell.meta.data("ylim")
-   circos.rect(xleft=PTTxPTM_repeats[i,"V2"], ybottom=ylim[1]+1.5, xright=PTTxPTM_repeats[i,"V3"], ytop=ylim[1]+2, 
-               sector.index=PTTxPTM_repeats$V1[i],
-               col = PTTxPTM_repeats$colors[i], border=NA)
-}
+
 
 ############# Effectors ###########
 for(i in seq_len(nrow(PTTxPTM_effectors))) {
@@ -139,13 +114,6 @@ for(i in seq_len(nrow(PTTxPTM_bsc))) {
                col = "deepskyblue3", border = "deepskyblue3")
 }
 
-############# Inversions ###########
-##for(i in seq_len(nrow(PTTxPTM_inversions))) {
-##   ylim = get.cell.meta.data("ylim")
-##   circos.rect(xleft=PTTxPTM_inversions[i,"V2"], ybottom=ylim[1]+3, xright=PTTxPTM_inversions[i,"V3"], ytop=ylim[1]+3.5,
-##               sector.index=PTTxPTM_inversions$V1[i],
-##               col = "royalblue", border = "royalblue")
-##}
 
 ############# Mat Loci ###########
 for(i in seq_len(nrow(PTTxPTM_mat))) {
@@ -173,47 +141,6 @@ for(k in 1:nrow(PTTxPTM_chords)){
    PTTxPTM_chords$V6[k] = PTTxPTM_chords$V6[k]
 }
 
-#### Plot R2 ###########
-### Only Plot potential DMIs
-#PTTxPTM_r2_chords<-subset(PTTxPTM_r2_chords,V7<0)
-
-#for(k in 1:nrow(PTTxPTM_r2_chords)){
-   #i,j reference of flow matrix
-#   i<-match(PTTxPTM_r2_chords$V1[k],PTTxPTM$chr)
-#   j<-match(PTTxPTM_r2_chords$V2[k],PTTxPTM$chr)
-
-   #plot link
-#   circos.link(sector.index1=PTTxPTM$chr[i], point1=c(PTTxPTM_r2_chords$V3[k], PTTxPTM_r2_chords$V4[k]),
-#               sector.index2=PTTxPTM$chr[j], point2=c(PTTxPTM_r2_chords$V5[k], PTTxPTM_r2_chords$V6[k]),
-#               col = add_transparency(PTTxPTM$colors[i], transparency = 0.4))
-
-   #update sum1 and sum2 for use when plotting the next link
-#   PTTxPTM_r2_chords$V3[k] = PTTxPTM_r2_chords$V3[k]
-#   PTTxPTM_r2_chords$V4[k] = PTTxPTM_r2_chords$V4[k]
-#   PTTxPTM_r2_chords$V5[k] = PTTxPTM_r2_chords$V5[k]
-#   PTTxPTM_r2_chords$V6[k] = PTTxPTM_r2_chords$V6[k]
-#}
-
-#### Plot Odds Ratio ################
-#for(k in 1:nrow(PTTxPTM_odds_chords)){
-   ###i,j reference of flow matrix
-#   i<-match(PTTxPTM_odds_chords$V1[k],PTTxPTM$chr)
-#   j<-match(PTTxPTM_odds_chords$V2[k],PTTxPTM$chr)
-
-   ###plot link
-#   circos.link(sector.index1=PTTxPTM$chr[i], point1=c(PTTxPTM_odds_chords$V3[k], PTTxPTM_odds_chords$V4[k]),
-#               sector.index2=PTTxPTM$chr[j], point2=c(PTTxPTM_odds_chords$V5[k], PTTxPTM_odds_chords$V6[k]),
-#               col = add_transparency(PTTxPTM$colors[i], transparency = (1-PTTxPTM_odds_chords$V9[i]/100)))
-
-   ###update sum1 and sum2 for use when plotting the next link
-#   PTTxPTM_odds_chords$V3[k] = PTTxPTM_odds_chords$V3[k]
-#   PTTxPTM_odds_chords$V4[k] = PTTxPTM_odds_chords$V4[k]
-#   PTTxPTM_odds_chords$V5[k] = PTTxPTM_odds_chords$V5[k]
-#   PTTxPTM_odds_chords$V6[k] = PTTxPTM_odds_chords$V6[k]
-#}
-
-
-
 
 ############ PTT vs PTM genomes ##############
 highlight.sector(goodPTTOrder,  track.index = 1, col  = "firebrick3",padding = c(0.1, 0, -2, 0),lwd=3,
@@ -224,34 +151,26 @@ highlight.sector(goodPTMOrder, track.index = 1, col  = "mediumblue",padding = c(
 
 
 ############# Legend ######################
-lgd_gene = Legend(at = c(0,100,200,300), col_fun = gene_col, 
-                   title_position = "topleft", title = "gene density (50kb window)")
+lgd_gene = Legend(at = "gene",
+                   legend_gp = gpar(fill = "dimgray"),
+                   title_position = "topleft", title = "gene")
 
-lgd_repeat = Legend(at = c("transposable element", "low-simple_repeat"), 
-                    legend_gp = gpar(fill = c("salmon","lightgoldenrodyellow")),
-                    title_position = "topleft", title = "repeat class")
 lgd_virulence = Legend(at=c("effector", "biosynthetic cluster"), 
                     legend_gp = gpar(fill = c("palegreen3", "deepskyblue3")),
                     title_position = "topleft", title = "putative virulence factors")
 
-##lgd_inversion = Legend(at = "inversion",
- ##                   legend_gp = gpar(fill = "royalblue"),
-  ##                  title_position = "topleft", title = "Genome Rearrangement")
 lgd_mat = Legend(at = "mat loci",
                     legend_gp = gpar(fill = "darkslateblue"),
                     title_position = "topleft", title = "mating genes")
 
-#lgd_pav = Legend(at = c("present","absent"),
-#                    legend_gp = gpar(fill = c("darkorchid3","thistle")),
-#                    title_position = "topleft", title = "presence/absence variation")
 lgd_pav = Legend(at = c("shared","non-shared"),
                     legend_gp = gpar(fill = c("darkorchid3","white")),
 		    border=c("darkorchid3","gray85"),
                     title_position = "topleft", title = "synteny")
 
-lgd_list_vertical = packLegend(lgd_gene,lgd_repeat,lgd_virulence,lgd_mat,lgd_pav)
+lgd_list_vertical = packLegend(lgd_gene,lgd_virulence,lgd_mat,lgd_pav)
 
 draw(lgd_list_vertical, x = unit(4, "mm"), y = unit(4, "mm"), just = c("left", "bottom"))
 
 
-dev.off()
+graphics.off()
