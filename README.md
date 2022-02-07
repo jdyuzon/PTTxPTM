@@ -65,5 +65,5 @@ SL_DivergenceGeneFlow.v2.sh
 ```
 Generates Figure for divergence statistics
 ```
-SL_DivergenceGeneFlow.v2.sh
+Divergence_GeneFlow.v2.R
 ```
