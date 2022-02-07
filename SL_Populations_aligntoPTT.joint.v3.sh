@@ -146,19 +146,7 @@ cut -f4-  Merged.flt.GT.FORMAT \
 |tr -d " \t" >Merged.flt.fasta
 
 echo "############ Divergence Stats (Dxy and Fst): only PTT and PTM isolates #########################"
-bcftools view -S ptm_samplelist.txt Merged.snps.vcf.gz >Merged.flt.recode.ptm.vcf.gz
-bcftools view -S ptt_samplelist.txt Merged.snps.vcf.gz >Merged.flt.recode.ptt.vcf.gz 
-
-vcftools --max-missing 0.7 --recode  --gzvcf  Merged.flt.recode.ptm.vcf.gz --out Merged.ptm.flt2
-vcftools --max-missing 0.7 --recode  --gzvcf  Merged.flt.recode.ptt.vcf.gz --out Merged.ptt.flt2
-
-bgzip -f -c Merged.ptm.flt2.recode.vcf >Merged.ptm.flt2.recode.vcf.gz
-bgzip -f -c Merged.ptt.flt2.recode.vcf >Merged.ptt.flt2.recode.vcf.gz
-tabix -f Merged.ptm.flt2.recode.vcf.gz
-tabix -f Merged.ptt.flt2.recode.vcf.gz
-
-bcftools merge Merged.ptm.flt2.recode.vcf.gz Merged.ptt.flt2.recode.vcf.gz -Ov \
-|vcftools --max-missing 0.9 --recode --gzvcf -  --out  Merged.flt.dxy.tmp
+vcftools --max-missing 0.95 --recode --gzvcf Merged.snps.vcf.gz  --out  Merged.flt.dxy.tmp
 
 /data/biosoftware/bcftools/bcftools-1.4/bcftools view --types snps -c1 \
 Merged.flt.dxy.tmp.recode.vcf > Merged.flt.dxy.vcf
