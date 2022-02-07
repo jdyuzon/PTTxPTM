@@ -40,7 +40,7 @@ python genomics_general-master/VCF_processing/parseVCF.py \
 python genomics_general-master/popgenWindows.py -w 50000 -s 5000 -m 10 \
 -g Merged.pttptm.geno -o divergence.csv \
 -f haplo -T 5 --popsFile ptmptt_pops.txt \
---writeFailedWindows \
+#--writeFailedWindows \
 -p ptt M207_Pt97m2.PTMPTT,M208_Pt98.PTMPTT,M209_Pt99.PTMPTT,M210_Pt100.PTMPTT,M211_Pt101.PTMPTT,M218_Pt103.PTMPTT,M219_Pt104.PTMPTT,M221_Pt105.PTMPTT,M95_Pt119_AB.PTMPTT,M97_Pt118.PTMPTT \
 -p ptm E32_Pt54m3.PTMPTT,E47S_Pt39.PTMPTT,E64S_Pt46.PTMPTT,E74S_Pt63_AB.PTMPTT,G101_Pt145.PTMPTT,G106_Pt124m3.PTMPTT,G11S_Pt131.PTMPTT,H165_Pt152m3.PTMPTT,H470_Pt177_AB.PTMPTT,H472_Pt169_AB.PTMPTT,H479_Pt171.PTMPTT,T81_Pt74.PTMPTT
 
