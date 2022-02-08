@@ -146,7 +146,7 @@ cut -f4-  Merged.flt.GT.FORMAT \
 |tr -d " \t" >Merged.flt.fasta
 
 echo "############ Divergence Stats (Dxy and Fst): only PTT and PTM isolates #########################"
-vcftools --max-missing 0.95 --recode --gzvcf Merged.snps.vcf.gz  --out  Merged.flt.dxy.tmp
+vcftools --max-missing 0.80 --recode --gzvcf Merged.snps.vcf.gz  --out  Merged.flt.dxy.tmp
 
 /data/biosoftware/bcftools/bcftools-1.4/bcftools view --types snps -c1 \
 Merged.flt.dxy.tmp.recode.vcf > Merged.flt.dxy.vcf
