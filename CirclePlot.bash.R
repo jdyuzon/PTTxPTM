@@ -174,3 +174,8 @@ draw(lgd_list_vertical, x = unit(4, "mm"), y = unit(4, "mm"), just = c("left", "
 
 
 graphics.off()
+
+
+#qpdf::pdf_combine(input = c("Figure1A_lesiontypes.pdf", 
+#                            "Figure1B_Circlize_plot_Feb072022.pdf"),
+#                  output = "output.pdf")
