@@ -112,7 +112,7 @@ write.table(outlier_fst_regions[,c("scaffold","start","end")], file = "outlier_f
 
 pdf("DivergenceStats.pdf", width=24, height=8)
 plot(g)
-dev.off()
+graphics.off()
 
 ################################################################
 colnames(genedensity_genome)<-c("scaffold","start", "end","genecount","stat")
@@ -167,4 +167,4 @@ plot(g)
 
 pdf("DivergenceStats.shm.pdf", width=24, height=8)
 plot(g)
-dev.off()
+graphics.off()
