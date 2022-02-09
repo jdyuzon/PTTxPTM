@@ -496,9 +496,15 @@ candidate_regions<-function(CHROM,range_start,range_stop){
     scale_color_manual(values=c(
       "bsc"="deepskyblue3",
       "effector"="palegreen3",
+      #"hotspot"="red", 
+      #"low-simple_repeat"="lightgoldenrodyellow", 
       "mat"="purple",
+      #"non-hotspot"="#FFFFFF00",
       "non-significant"="gray",
-      "significant"="blue"
+      "significant"="blue",
+      #"TE"="salmon",
+      "shared"="darkorchid3"
+      #"unique"="light gray"
     ))+
     geom_hline(yintercept = 0.5)+
     geom_hline(yintercept = -0.08,color="gray")+
