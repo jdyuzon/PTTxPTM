@@ -81,6 +81,9 @@ median(na.omit(phenotypes$mean.percent.leaf.coverage[phenotypes$Net.blotch.form=
 median(na.omit(phenotypes$mean.percent.leaf.coverage[phenotypes$Net.blotch.form=='Spot Lesion' &
                                                        phenotypes$Cross.Type=='Inter'])) #0.2526316
 
+###Interspecies-Net and Spot
+median(na.omit(phenotypes$mean.percent.leaf.coverage[phenotypes$Cross.Type=='Inter'])) #0.2631579
+
 
 ###################################################################
 ##################### Control for Lesion Type #####################
